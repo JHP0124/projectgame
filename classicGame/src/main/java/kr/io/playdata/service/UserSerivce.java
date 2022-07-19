@@ -8,6 +8,10 @@ public interface UserSerivce {
 	
 	boolean insertUser(User user); // 유저를 등록하는 메서드
 	
+	boolean updateuser(User user);
+	
+	boolean deleteuser(User user);
+	
 	/*void updatepassword(User user);
 	void updatemail(User user);
 	void updatename(User user);
@@ -15,7 +19,7 @@ public interface UserSerivce {
 	
 	
 	
-	void deleteuser(User user);*/
+	*/
 	
 	
 }

@@ -31,6 +31,38 @@ public class UserSerivceImpl implements UserSerivce {
 		}
 		return result;
 	}
+	
+	
+	public boolean updateuser(User user) {
+		boolean result =false;
+		User finduser = userrepo.findById(user.getId()).get();
+			
+		if(finduser !=null) {
+			finduser.setId(user.getId());
+			finduser.setPw(user.getPw());
+			finduser.setMail(user.getMail());
+			finduser.setName(user.getName());
+			finduser.setNickname(user.getNickname());
+	
+			userrepo.save(finduser);
+			result = true;
+			}
+			
+		return result;
+	}
+	
+	public boolean deleteuser(User user) {
+		boolean result =false;
+		User finduser = userrepo.findById(user.getId()).get();
+		if(finduser !=null) {
+			userrepo.deleteById(user.getId());
+			result = true;
+		}
+		
+		return result;
+	}
+	
+	
 
 	
 	
