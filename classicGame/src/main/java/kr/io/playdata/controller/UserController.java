@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -15,7 +16,8 @@ import kr.io.playdata.domain.User;
 import kr.io.playdata.service.UserSerivce;
 
 @SessionAttributes("user")
-@Controller
+//@Controller
+@RestController
 public class UserController {
 	
 	@Autowired

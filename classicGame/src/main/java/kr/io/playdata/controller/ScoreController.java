@@ -3,6 +3,7 @@ package kr.io.playdata.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import kr.io.playdata.domain.Cgame1;
 import kr.io.playdata.domain.Cgame2;
@@ -11,6 +12,7 @@ import kr.io.playdata.service.Cgame1Service;
 import kr.io.playdata.service.Cgame2Service;
 import kr.io.playdata.service.Cgame3Service;
 
+@SessionAttributes("user")
 @RestController
 public class ScoreController {
 

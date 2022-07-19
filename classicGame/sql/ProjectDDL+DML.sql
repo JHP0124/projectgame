@@ -10,6 +10,7 @@ USE playdata;
 DROP TABLE IF EXISTS Olduser;
 
 CREATE TABLE Olduser (
+int unsigned auto_increment  primary key, 
 id VARCHAR(40) primary key,  
 pw VARCHAR(40),
 mail VARCHAR(40),
@@ -311,7 +312,7 @@ for each row
 begin
 DECLARE nick VARCHAR(40);
 set nick = old.nickname;
-insert into olduser values (old.id, old.pw, old.mail, old.name, old.nickname);  
+insert into olduser values (null, old.id, old.pw, old.mail, old.name, old.nickname);  
 delete from total where nickname = nick;
 delete from cgame1 where nickname = nick;
 delete from cgame2 where nickname = nick;
