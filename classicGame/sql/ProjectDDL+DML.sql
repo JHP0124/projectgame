@@ -7,6 +7,16 @@ mysql -u root -p
 
 USE playdata;
 
+DROP TABLE IF EXISTS Olduser;
+
+CREATE TABLE Olduser (
+id VARCHAR(40) primary key,  
+pw VARCHAR(40),
+mail VARCHAR(40),
+name VARCHAR(40),
+nickname VARCHAR(40)
+);
+
 
 -- User 테이블
 DROP TABLE IF EXISTS User;
@@ -260,6 +270,66 @@ $$
 다행히도 테이블 트리거 다 생성되고 데이터 삽입도 되고 삽입으로 인한 트리거 발동도 잘 적용됨. 
 
 끗. 이제 구조도... 아 이걸로 하루 다날려먹네...
+
+
+-- 닉네임 변경시 total,cgame1~3 테이블의 닉네임 변경하는 트리거
+
+drop trigger IF EXISTS user_nick_update;
+
+DELIMITER $$
+CREATE TRIGGER user_nick_update
+AFTER UPDATE 
+ON user
+FOR EACH ROW
+BEGIN 
+DECLARE nick VARCHAR(40);
+DECLARE name VARCHAR(40);
+set nick = new.nickname ;
+SET name = OLD.nickname ;
+
+IF nick != name THEN
+UPDATE total SET nickname=nick WHERE nickname = name;
+UPDATE CGAME1 SET nickname=nick WHERE nickname = name;
+UPDATE CGAME2 SET nickname=nick WHERE nickname = name;
+UPDATE CGAME3 SET nickname=nick WHERE nickname = name;
+END IF;
+END$$        
+DELIMITER ;
+
+
+-- user table에서 삭제시 모든 테이블에서 해당 닉네임의 정보가 삭제되고 
+-- old 테이블로 user 정보가 넘어가는 트리거 만들기
+
+
+drop trigger IF EXISTS user_drop_old;
+
+DELIMITER $$
+CREATE TRIGGER user_drop_old
+before delete
+on user
+for each row
+begin
+DECLARE nick VARCHAR(40);
+set nick = old.nickname;
+insert into olduser values (old.id, old.pw, old.mail, old.name, old.nickname);  
+delete from total where nickname = nick;
+delete from cgame1 where nickname = nick;
+delete from cgame2 where nickname = nick;
+delete from cgame3 where nickname = nick;
+END$$        
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
